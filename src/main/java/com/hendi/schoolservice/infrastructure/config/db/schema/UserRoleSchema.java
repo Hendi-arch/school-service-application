@@ -82,6 +82,8 @@ public class UserRoleSchema {
     }
 
     public enum RoleEnum {
+        STUDENT,
+        TEACHER,
         USER,
         ADMIN,
         SUPER_ADMIN

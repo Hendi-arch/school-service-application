@@ -22,7 +22,8 @@ public class SeederUserRolesUseCase {
             return existingRoles;
         }
 
-        List<UserRoleModel> userRolesToSeed = Stream.of(RoleEnum.SUPER_ADMIN, RoleEnum.ADMIN, RoleEnum.USER)
+        List<UserRoleModel> userRolesToSeed = Stream
+                .of(RoleEnum.SUPER_ADMIN, RoleEnum.ADMIN, RoleEnum.USER, RoleEnum.TEACHER, RoleEnum.STUDENT)
                 .map(UserRoleModel::new)
                 .collect(Collectors.toList());
         return userRoleGateway.createAll(userRolesToSeed);
