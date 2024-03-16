@@ -11,6 +11,8 @@ public interface ClassroomGateway {
 
     ClassroomModel update(ClassroomModel classroomModel);
 
+    List<ClassroomModel> createAll(List<ClassroomModel> classroomModels);
+
     void delete(Long id);
 
     Optional<ClassroomModel> findById(Long id);

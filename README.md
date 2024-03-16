@@ -8,6 +8,8 @@ The School Service Application Sample.
 - **User Management**: Enables users to perform actions such as logging in, signing up, updating their information, and searching for other users.
 - **User Token Management**: Facilitates the creation, search, and deletion of user tokens for enhanced security and session management.
 - **User Role Management**: Provides functionality for creating, searching, and deleting user roles, empowering administrators to manage user permissions effectively.
+- **Classroom Management**: Allows for the creation, retrieval, and updating of classrooms.
+- **Course Management**: Provides endpoints for creating, retrieving, and updating courses.
 
 ## Installation
 
@@ -39,6 +41,16 @@ Once the application is running, you can interact with it through the following 
 
 - **API Requests:** Use tools like cURL or Postman to make API requests to the exposed endpoints. To quickly get started with Postman, you can import the provided Postman collection by uploading the `postman-collection.json` file located in the project directory.
 
+## Demo Account
+
+| Role         | Username     | Password            |
+|--------------|--------------|---------------------|
+| STUDENT      | student      | SecurePassword123$ |
+| TEACHER      | teacher      | SecurePassword123$ |
+| USER         | user         | SecurePassword123$ |
+| ADMIN        | admin        | SecurePassword123$ |
+| SUPER_ADMIN  | super_admin  | SecurePassword123$ |
+
 ## API Endpoints
 
 The application exposes the following API endpoints:
@@ -52,6 +64,14 @@ The application exposes the following API endpoints:
 - **DELETE** `/usertokens/{authToken}`: Endpoint for deleting user tokens.
 - **GET** `/userroles/{id}`: Endpoint for searching user role.
 - **GET** `/userroles/all`: Endpoint for getting all user roles.
+- **POST** `/classrooms/classroom`: Endpoint for creating a new classroom.
+- **GET** `/classrooms/all`: Endpoint for retrieving all classrooms.
+- **GET** `/classrooms/{id}`: Endpoint for retrieving a specific classroom by ID.
+- **PUT** `/classrooms/{id}`: Endpoint for updating a specific classroom by ID.
+- **POST** `/courses/course`: Endpoint for creating a new course.
+- **GET** `/courses/all`: Endpoint for retrieving all courses.
+- **GET** `/courses/{id}`: Endpoint for retrieving a specific course by ID.
+- **PUT** `/courses/{id}`: Endpoint for updating a specific course by ID.
 
 For detailed information on each endpoint, refer to the [API documentation.](https://app.swaggerhub.com/apis-docs/HENDINOFIANSYAH11/school-service-application-api/1.1.0)
 
@@ -99,3 +119,12 @@ The Use Case layer contains the system use cases, which can be made parallel to 
 ## Testing
 
 The application includes automated tests. Run `mvn test` to execute the tests and verify the functionality.
+
+## Under Development
+
+The following features are currently under development and will be available in future updates:
+
+- **Grade**
+- **Attendance**
+- **Assignment**
+- **Submission**

@@ -11,6 +11,8 @@ public interface CourseGateway {
 
     CourseModel update(CourseModel courseModel);
 
+    List<CourseModel> createAll(List<CourseModel> courseModels);
+
     void delete(Long id);
 
     Optional<CourseModel> findById(Long id);

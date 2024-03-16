@@ -170,17 +170,7 @@
                         "type": "text"
                     }
                 ],
-                "url": {
-                    "raw": "{{baseUrl}}/users/{id}",
-                    "protocol": "http",
-                    "host": [
-                        "{{baseUrl}}"
-                    ],
-                    "path": [
-                        "users",
-                        "{id}"
-                    ]
-                }
+                "url": "{{baseUrl}}/users/{id}"
             },
             "response": []
         },
@@ -199,17 +189,7 @@
                     "mode": "raw",
                     "raw": "{\n    \"username\": \"string\",\n    \"password\": \"string\"\n}"
                 },
-                "url": {
-                    "raw": "{{baseUrl}}/users/{id}",
-                    "protocol": "http",
-                    "host": [
-                        "{{baseUrl}}"
-                    ],
-                    "path": [
-                        "users",
-                        "{id}"
-                    ]
-                }
+                "url": "{{baseUrl}}/users/{id}"
             },
             "response": []
         },
@@ -270,6 +250,142 @@
                     }
                 ],
                 "url": "{{baseUrl}}/userroles/{{id}}"
+            },
+            "response": []
+        },
+        {
+            "name": "Create Course",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"teacherId\": 0\n}"
+                },
+                "url": "{{baseUrl}}/courses/course"
+            },
+            "response": []
+        },
+        {
+            "name": "Get All Courses",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": "{{baseUrl}}/courses/all"
+            },
+            "response": []
+        },
+        {
+            "name": "Get Course by ID",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": "{{baseUrl}}/courses/{id}"
+            },
+            "response": []
+        },
+        {
+            "name": "Update Course",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"teacherId\": 0\n}"
+                },
+                "url": "{{baseUrl}}/courses/{id}"
+            },
+            "response": []
+        },
+        {
+            "name": "Create Classroom",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"string\",\n    \"courseId\": 0\n}"
+                },
+                "url": "{{baseUrl}}/classrooms/classroom"
+            },
+            "response": []
+        },
+        {
+            "name": "Get All Classrooms",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": "{{baseUrl}}/classrooms/all"
+            },
+            "response": []
+        },
+        {
+            "name": "Get Classroom by ID",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": "{{baseUrl}}/classrooms/{id}"
+            },
+            "response": []
+        },
+        {
+            "name": "Update Classroom",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"string\",\n    \"courseId\": 0\n}"
+                },
+                "url": "{{baseUrl}}/classrooms/{id}"
             },
             "response": []
         }

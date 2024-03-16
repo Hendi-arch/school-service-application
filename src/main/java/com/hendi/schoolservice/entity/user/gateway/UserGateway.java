@@ -12,6 +12,8 @@ public interface UserGateway {
 
     UserAccountModel update(UserAccountModel userAccountModel);
 
+    List<UserAccountModel> createAll(List<UserAccountModel> userAccountModels);
+
     void delete(Long id) throws UserNotFoundException;
 
     Optional<UserAccountModel> findById(Long id);

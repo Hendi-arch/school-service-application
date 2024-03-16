@@ -236,6 +236,60 @@ paths:
       security:
         - BearerAuth: []
 
+  /courses:
+    get:
+      summary: Get all courses
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CourseData"
+              example:
+                - id: 1
+                  name: "Math"
+                  description: "Introduction to mathematics"
+                  teacher: "John Doe"
+                  createdAt: "2022-02-28T08:00:00Z"
+                  updatedAt: "2022-02-28T08:00:00Z"
+                - id: 2
+                  name: "Science"
+                  description: "Basic science concepts"
+                  teacher: "Jane Smith"
+                  createdAt: "2022-02-28T08:05:00Z"
+                  updatedAt: "2022-02-28T08:05:00Z"
+      security:
+        - BearerAuth: []
+
+  /classrooms:
+    get:
+      summary: Get all classrooms
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ClassroomData"
+              example:
+                - id: 1
+                  name: "Class A"
+                  capacity: 30
+                  createdAt: "2022-02-28T08:00:00Z"
+                  updatedAt: "2022-02-28T08:00:00Z"
+                - id: 2
+                  name: "Class B"
+                  capacity: 25
+                  createdAt: "2022-02-28T08:05:00Z"
+                  updatedAt: "2022-02-28T08:05:00Z"
+      security:
+        - BearerAuth: []
+
 components:
   securitySchemes:
     BearerAuth:
@@ -332,3 +386,48 @@ components:
           type: string
           format: date-time
           description: Expiry date and time of the token
+    CourseData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Course ID
+        name:
+          type: string
+          description: Name of the course
+        description:
+          type: string
+          description: Description of the course
+        teacher:
+          type: string
+          description: Name of the teacher
+        createdAt:
+          type: string
+          format: date-time
+          description: Date and time of course creation
+        updatedAt:
+          type: string
+          format: date-time
+          description: Date and time of last course update
+    ClassroomData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Classroom ID
+        name:
+          type: string
+          description: Name of the classroom
+        capacity:
+          type: integer
+          description: Capacity of the classroom
+        createdAt:
+          type: string
+          format: date-time
+          description: Date and time of classroom creation
+        updatedAt:
+          type: string
+          format: date-time
+          description: Date and time of last classroom update

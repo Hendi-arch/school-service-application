@@ -46,4 +46,10 @@ public class UserDatabaseGateway implements UserGateway {
         return repository.findAll().stream().map(UserSchema::toUserAccountModel).toList();
     }
 
+    @Override
+    public List<UserAccountModel> createAll(List<UserAccountModel> userAccountModels) {
+        return repository.saveAll(UserSchema.toUserSchemaList(userAccountModels)).stream()
+                .map(UserSchema::toUserAccountModel).toList();
+    }
+
 }

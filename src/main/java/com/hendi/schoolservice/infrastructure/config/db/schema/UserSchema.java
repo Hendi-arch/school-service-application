@@ -1,6 +1,7 @@
 package com.hendi.schoolservice.infrastructure.config.db.schema;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -87,6 +88,10 @@ public class UserSchema {
         userAccountModel.setCreatedBy(this.createdBy);
         userAccountModel.setUpdatedBy(this.updatedBy);
         return userAccountModel;
+    }
+
+    public static List<UserSchema> toUserSchemaList(List<UserAccountModel> userAccountModels) {
+        return userAccountModels.stream().map(UserSchema::new).toList();
     }
 
 }

@@ -33,7 +33,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.hendi.schoolservice.infrastructure.config.db.schema.UserRoleSchema.RoleEnum;
 import com.hendi.schoolservice.infrastructure.config.web.response.WebHttpResponse;
-import com.hendi.schoolservice.infrastructure.user.dto.UserCreateData;
 import com.hendi.schoolservice.infrastructure.user.dto.UserLoginData;
 import com.hendi.schoolservice.infrastructure.user.dto.UserPublicData;
 import com.hendi.schoolservice.infrastructure.user.dto.UserUpdateData;
@@ -64,42 +63,15 @@ class UserControllerAcceptanceTest {
         @LocalServerPort
         private int serverPort;
 
-        private static final String SUPERADMIN = "hendi_novi";
-        private static final String USER = "jhon_doe";
-        private static final String PASSWORD = "HENdi123$$##";
+        private static final String SUPERADMIN = "super_admin";
+        private static final String USER = "user";
+        private static final String PASSWORD = "SecurePassword123$";
         private static Long superAdminUserId;
         private static String superAdminJwtToken;
         private static LocalDateTime expiryDateTime;
 
         @Test
         @Order(1)
-        void testSuperAdminCreationSuccess() throws JsonProcessingException {
-                UserCreateData createData = new UserCreateData(SUPERADMIN, PASSWORD, 1L);
-                ResponseEntity<WebHttpResponse<UserPublicData>> responseEntity = restTemplate.exchange(
-                                TestUtils.getUsersBaseUrl(serverPort, "/user"), HttpMethod.POST,
-                                new HttpEntity<>(createData), TestUtils.webHttpResponseType());
-
-                assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-                assertNotNull(responseEntity.getBody());
-
-                WebHttpResponse<UserPublicData> responseBody = TestUtils.deserializeResponseBody(
-                                responseEntity.getBody(),
-                                new TypeReference<WebHttpResponse<UserPublicData>>() {
-                                });
-                assertNotNull(responseBody.getData());
-
-                UserPublicData publicData = responseBody.getData();
-                assertEquals(1L, publicData.id());
-                assertEquals(SUPERADMIN, publicData.username());
-                assertNotNull(publicData.createdAt());
-                assertNotNull(publicData.updatedAt());
-
-                assertNotNull(publicData.role());
-                assertEquals(RoleEnum.SUPER_ADMIN.name(), publicData.role().role());
-        }
-
-        @Test
-        @Order(2)
         void testLoginSuperAdminSuccess() throws JsonProcessingException {
                 UserLoginData loginData = new UserLoginData(SUPERADMIN, PASSWORD);
                 ResponseEntity<WebHttpResponse<UserPublicData>> responseEntity = restTemplate.exchange(
@@ -117,7 +89,7 @@ class UserControllerAcceptanceTest {
                 assertNotNull(responseBody.getData());
 
                 UserPublicData publicData = responseBody.getData();
-                assertEquals(1L, publicData.id());
+                assertNotNull(publicData.id());
                 superAdminUserId = publicData.id();
 
                 assertEquals(SUPERADMIN, publicData.username());
@@ -135,7 +107,7 @@ class UserControllerAcceptanceTest {
         }
 
         @Test
-        @Order(3)
+        @Order(2)
         void testGetAllUsers() throws JsonProcessingException {
                 HttpHeaders httpHeaders = TestUtils.getAuthHeaders(superAdminJwtToken);
                 ResponseEntity<WebHttpResponse<List<UserPublicData>>> responseEntity = restTemplate.exchange(
@@ -155,7 +127,7 @@ class UserControllerAcceptanceTest {
         }
 
         @Test
-        @Order(4)
+        @Order(3)
         void testGetUserById() throws JsonProcessingException {
                 HttpHeaders httpHeaders = TestUtils.getAuthHeaders(superAdminJwtToken);
                 ResponseEntity<WebHttpResponse<UserPublicData>> responseEntity = restTemplate.exchange(
@@ -182,7 +154,7 @@ class UserControllerAcceptanceTest {
         }
 
         @Test
-        @Order(5)
+        @Order(4)
         void testUpdateUser() throws JsonProcessingException {
                 UserUpdateData updateData = new UserUpdateData(PASSWORD, 1L);
                 HttpHeaders httpHeaders = TestUtils.getAuthHeaders(superAdminJwtToken);
@@ -211,8 +183,8 @@ class UserControllerAcceptanceTest {
         }
 
         @Test
-        @Order(6)
-        void testgGetAllUserRole() throws JsonProcessingException {
+        @Order(5)
+        void testGetAllUserRole() throws JsonProcessingException {
                 HttpHeaders httpHeaders = TestUtils.getAuthHeaders(superAdminJwtToken);
                 ResponseEntity<WebHttpResponse<List<UserRolePublicData>>> responseEntity = restTemplate.exchange(
                                 TestUtils.getUserRolesBaseUrl(serverPort, "/all"), HttpMethod.GET,
@@ -231,7 +203,7 @@ class UserControllerAcceptanceTest {
         }
 
         @Test
-        @Order(7)
+        @Order(6)
         void testGetUserRoleById() throws JsonProcessingException {
                 HttpHeaders httpHeaders = TestUtils.getAuthHeaders(superAdminJwtToken);
                 ResponseEntity<WebHttpResponse<UserRolePublicData>> responseEntity = restTemplate.exchange(
@@ -257,7 +229,7 @@ class UserControllerAcceptanceTest {
         }
 
         @Test
-        @Order(8)
+        @Order(7)
         void testGetUserTokenByToken() throws JsonProcessingException {
                 HttpHeaders httpHeaders = TestUtils.getAuthHeaders(superAdminJwtToken);
                 ResponseEntity<WebHttpResponse<UserTokenPublicData>> responseEntity = restTemplate.exchange(
@@ -281,7 +253,7 @@ class UserControllerAcceptanceTest {
         }
 
         @Test
-        @Order(9)
+        @Order(8)
         void testDeleteUserTokenByToken() throws JsonProcessingException {
                 HttpHeaders httpHeaders = TestUtils.getAuthHeaders(superAdminJwtToken);
                 ResponseEntity<WebHttpResponse<String>> responseEntity = restTemplate.exchange(
@@ -295,34 +267,7 @@ class UserControllerAcceptanceTest {
         }
 
         @Test
-        @Order(10)
-        void testUserCreationSuccess() throws JsonProcessingException {
-                UserCreateData createData = new UserCreateData(USER, PASSWORD, 3L);
-                ResponseEntity<WebHttpResponse<UserPublicData>> responseEntity = restTemplate.exchange(
-                                TestUtils.getUsersBaseUrl(serverPort, "/user"), HttpMethod.POST,
-                                new HttpEntity<>(createData), TestUtils.webHttpResponseType());
-
-                assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-                assertNotNull(responseEntity.getBody());
-
-                WebHttpResponse<UserPublicData> responseBody = TestUtils.deserializeResponseBody(
-                                responseEntity.getBody(),
-                                new TypeReference<WebHttpResponse<UserPublicData>>() {
-                                });
-                assertNotNull(responseBody.getData());
-
-                UserPublicData publicData = responseBody.getData();
-                assertEquals(2L, publicData.id());
-                assertEquals(USER, publicData.username());
-                assertNotNull(publicData.createdAt());
-                assertNotNull(publicData.updatedAt());
-
-                assertNotNull(publicData.role());
-                assertEquals(RoleEnum.USER.name(), publicData.role().role());
-        }
-
-        @Test
-        @Order(11)
+        @Order(9)
         void testLoginUserSuccess() throws JsonProcessingException {
                 UserLoginData loginData = new UserLoginData(USER, PASSWORD);
                 ResponseEntity<WebHttpResponse<UserPublicData>> responseEntity = restTemplate.exchange(
@@ -340,7 +285,7 @@ class UserControllerAcceptanceTest {
                 assertNotNull(responseBody.getData());
 
                 UserPublicData publicData = responseBody.getData();
-                assertEquals(2L, publicData.id());
+                assertNotNull(publicData.id());
 
                 assertEquals(USER, publicData.username());
                 assertNotNull(publicData.createdAt());

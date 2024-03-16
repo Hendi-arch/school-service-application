@@ -1,6 +1,7 @@
 package com.hendi.schoolservice.infrastructure.config.db.schema;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -86,6 +87,10 @@ public class CourseSchema {
         courseModel.setCreatedBy(this.createdBy);
         courseModel.setUpdatedBy(this.updatedBy);
         return courseModel;
+    }
+
+    public static List<CourseSchema> toCourseSchemaList(List<CourseModel> courseModels) {
+        return courseModels.stream().map(CourseSchema::new).toList();
     }
 
 }
