@@ -1,0 +1,433 @@
+openapi: 3.0.0
+info:
+  title: School Service Application API
+  version: 1.1.0
+  description: API documentation for School Service Application
+  contact:
+    name: Hendi
+    email: hendinofiansyah11@gmail.com
+servers:
+  - url: http://localhost:3333
+paths:
+  /users/login:
+    post:
+      summary: User login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserLoginData"
+      responses:
+        "200":
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserPublicData"
+              example:
+                id: 1
+                username: user123
+                createdAt: "2022-02-28T08:00:00Z"
+                updatedAt: "2022-02-28T08:00:00Z"
+                jwtToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6InVzZXIxMjMiLCJpYXQiOjE2NDEyNzIyNzUsImV4cCI6MTY0MTI3MjI4MH0.YeA6n_8xPJ8aa-YTij-wCflnbm0hnEXKWuP2p4M5SXI"
+                jwtExpiryDateTime: "2024-02-28T08:00:00Z"
+        "400":
+          description: Bad request
+
+  /users/user:
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCreateData"
+      responses:
+        "201":
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserPublicData"
+              example:
+                id: 2
+                username: newuser
+                createdAt: "2022-02-28T08:05:00Z"
+                updatedAt: "2022-02-28T08:05:00Z"
+        "400":
+          description: Bad request
+
+  /users/all:
+    get:
+      summary: Get all users
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserPublicData"
+              example:
+                - id: 1
+                  username: user123
+                  createdAt: "2022-02-28T08:00:00Z"
+                  updatedAt: "2022-02-28T08:00:00Z"
+                - id: 2
+                  username: newuser
+                  createdAt: "2022-02-28T08:05:00Z"
+                  updatedAt: "2022-02-28T08:05:00Z"
+      security:
+        - BearerAuth: []
+
+  /users/{id}:
+    get:
+      summary: Get user by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserPublicData"
+              example:
+                id: 1
+                username: user123
+                createdAt: "2022-02-28T08:00:00Z"
+                updatedAt: "2022-02-28T08:00:00Z"
+        "404":
+          description: User not found
+      security:
+        - BearerAuth: []
+    put:
+      summary: Update user by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdateData"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserPublicData"
+              example:
+                id: 1
+                username: user123
+                createdAt: "2022-02-28T08:00:00Z"
+                updatedAt: "2022-02-28T08:10:00Z"
+        "400":
+          description: Bad request
+      security:
+        - BearerAuth: []
+
+  /usertokens/{authToken}:
+    get:
+      summary: Get User Token by Auth Token
+      parameters:
+        - name: authToken
+          in: path
+          description: Authentication token of the user
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserTokenPublicData"
+              example:
+                token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                expiryDateTime: "2022-03-01T00:00:00Z"
+        "404":
+          description: User Token not found
+      security:
+        - BearerAuth: []
+    delete:
+      summary: Delete User Token by Auth Token
+      parameters:
+        - name: authToken
+          in: path
+          description: Authentication token of the user
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+              example: Success
+      security:
+        - BearerAuth: []
+
+  /userroles/all:
+    get:
+      summary: Get all user roles
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserRolePublicData"
+              example:
+                - id: 1
+                  role: "ADMIN"
+                  createdAt: "2022-02-28T08:00:00Z"
+                  updatedAt: "2022-02-28T08:00:00Z"
+                - id: 2
+                  role: "USER"
+                  createdAt: "2022-02-28T08:05:00Z"
+                  updatedAt: "2022-02-28T08:05:00Z"
+      security:
+        - BearerAuth: []
+
+  /userroles/{id}:
+    get:
+      summary: Get user role by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User Role ID
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserRolePublicData"
+              example:
+                id: 1
+                role: "ADMIN"
+                createdAt: "2022-02-28T08:00:00Z"
+                updatedAt: "2022-02-28T08:00:00Z"
+        "404":
+          description: User Role not found
+      security:
+        - BearerAuth: []
+
+  /courses:
+    get:
+      summary: Get all courses
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CourseData"
+              example:
+                - id: 1
+                  name: "Math"
+                  description: "Introduction to mathematics"
+                  teacher: "John Doe"
+                  createdAt: "2022-02-28T08:00:00Z"
+                  updatedAt: "2022-02-28T08:00:00Z"
+                - id: 2
+                  name: "Science"
+                  description: "Basic science concepts"
+                  teacher: "Jane Smith"
+                  createdAt: "2022-02-28T08:05:00Z"
+                  updatedAt: "2022-02-28T08:05:00Z"
+      security:
+        - BearerAuth: []
+
+  /classrooms:
+    get:
+      summary: Get all classrooms
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ClassroomData"
+              example:
+                - id: 1
+                  name: "Class A"
+                  capacity: 30
+                  createdAt: "2022-02-28T08:00:00Z"
+                  updatedAt: "2022-02-28T08:00:00Z"
+                - id: 2
+                  name: "Class B"
+                  capacity: 25
+                  createdAt: "2022-02-28T08:05:00Z"
+                  updatedAt: "2022-02-28T08:05:00Z"
+      security:
+        - BearerAuth: []
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    UserLoginData:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          description: User's username
+        password:
+          type: string
+          description: User's password
+    UserCreateData:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          description: User's username
+        password:
+          type: string
+          description: User's password
+    UserUpdateData:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          description: User's username
+        password:
+          type: string
+          description: User's password
+    UserPublicData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: User ID
+        username:
+          type: string
+          description: User's username
+        jwtToken:
+          type: string
+          description: Authentication token of the user
+        jwtExpiryDateTime:
+          type: string
+          format: date-time
+          description: Expiry date and time of the token
+        createdAt:
+          type: string
+          format: date-time
+          description: Date and time of user creation
+        updatedAt:
+          type: string
+          format: date-time
+          description: Date and time of last user update
+    UserRolePublicData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: User Role ID
+        role:
+          type: string
+          description: User's role
+        createdAt:
+          type: string
+          format: date-time
+          description: Date and time of user role creation
+        updatedAt:
+          type: string
+          format: date-time
+          description: Date and time of last user role update
+    UserTokenPublicData:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Authentication token of the user
+        expiryDateTime:
+          type: string
+          format: date-time
+          description: Expiry date and time of the token
+    CourseData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Course ID
+        name:
+          type: string
+          description: Name of the course
+        description:
+          type: string
+          description: Description of the course
+        teacher:
+          type: string
+          description: Name of the teacher
+        createdAt:
+          type: string
+          format: date-time
+          description: Date and time of course creation
+        updatedAt:
+          type: string
+          format: date-time
+          description: Date and time of last course update
+    ClassroomData:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Classroom ID
+        name:
+          type: string
+          description: Name of the classroom
+        capacity:
+          type: integer
+          description: Capacity of the classroom
+        createdAt:
+          type: string
+          format: date-time
+          description: Date and time of classroom creation
+        updatedAt:
+          type: string
+          format: date-time
+          description: Date and time of last classroom update
